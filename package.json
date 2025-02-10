@@ -18,7 +18,8 @@
       "dev": "vite",
       "build": "tsc && vite build",
       "vitest": "vitest run --browser",
-      "test": "start-server-and-test dev http://localhost:5173 'vitest --browser'"
+      "test": "start-server-and-test dev http://localhost:5173 'vitest --browser'",
+      "clean": "rimraf build && rimraf types"
    },
    "repository": {
       "type": "git",

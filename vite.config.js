@@ -5,12 +5,13 @@ export default defineConfig({
    build: {
       lib: {
          entry: path.resolve(__dirname, "src/handshake.ts"),
-         name: "handshake",
+         name: "Handshake",
          fileName: "handshake",
       },
       rollupOptions: {
          output: {
             dir: "./build",
+            name: "Handshake",
          },
       },
       sourcemap: true,
