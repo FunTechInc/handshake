@@ -45,8 +45,8 @@ declare class Child extends BaseChannel {
     constructor();
     protected _onMessage(e: MessageEvent): void;
 }
-export declare const Handshake: {
+declare const Handshake: {
     Parent: typeof Parent;
     Child: typeof Child;
 };
-export {};
+export { Handshake };

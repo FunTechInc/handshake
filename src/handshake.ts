@@ -156,7 +156,16 @@ class Child extends BaseChannel {
    }
 }
 
-export const Handshake = {
+const Handshake = {
    Parent,
    Child,
 };
+
+if (typeof exports !== "undefined") {
+   exports.Handshake = Handshake;
+}
+if (typeof globalThis !== "undefined") {
+   (globalThis as any).Handshake = Handshake;
+}
+
+export { Handshake };
