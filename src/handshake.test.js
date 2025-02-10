@@ -59,4 +59,22 @@ describe("Handshake", () => {
          });
       });
    });
+
+   it("should revert listners in the child", async () => {
+      await new Promise((resolve) => {
+         new Handshake.Parent({
+            container: "container",
+            url: "http://localhost:63315/child.html",
+         }).ready(({ emit, on, revert }) => {
+            emit("revertTestCount");
+            emit("revertTest");
+            emit("revertTestCount");
+            on("revertTestReturn", (count) => {
+               expect(count).toBe(1);
+               revert();
+               resolve();
+            });
+         });
+      });
+   });
 });
