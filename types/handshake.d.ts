@@ -26,7 +26,7 @@ declare abstract class BaseChannel {
     protected abstract _onMessage(event: MessageEvent): void;
     protected _handleOnMessage(e: MessageEvent, type: MESSAGE_TYPES, callback: () => void): void;
 }
-declare class Parent extends BaseChannel {
+export declare class Parent extends BaseChannel {
     container: HTMLElement;
     iframe: HTMLIFrameElement;
     protected _handshakeInterval?: number;
@@ -41,12 +41,8 @@ declare class Parent extends BaseChannel {
     private _startHandshake;
     protected _onMessage(e: MessageEvent): void;
 }
-declare class Child extends BaseChannel {
+export declare class Child extends BaseChannel {
     constructor();
     protected _onMessage(e: MessageEvent): void;
 }
-export declare const Handshake: {
-    Parent: typeof Parent;
-    Child: typeof Child;
-};
 export {};

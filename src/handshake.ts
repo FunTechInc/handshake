@@ -83,7 +83,7 @@ abstract class BaseChannel {
    }
 }
 
-class Parent extends BaseChannel {
+export class Parent extends BaseChannel {
    public container: HTMLElement;
    public iframe: HTMLIFrameElement;
    protected _handshakeInterval?: number;
@@ -141,7 +141,7 @@ class Parent extends BaseChannel {
    }
 }
 
-class Child extends BaseChannel {
+export class Child extends BaseChannel {
    constructor() {
       super({
          targetWindow: window.parent,
@@ -155,8 +155,3 @@ class Child extends BaseChannel {
       );
    }
 }
-
-export const Handshake = {
-   Parent,
-   Child,
-};

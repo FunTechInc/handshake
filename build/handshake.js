@@ -43,7 +43,7 @@ class a {
     r.type === t ? (i(), this._PromiseResolver(this)) : r.type === "event" && r.key != null && this._trigger(r.key, r.value);
   }
 }
-class _ extends a {
+class g extends a {
   constructor(t) {
     super();
     n(this, "container");
@@ -73,7 +73,7 @@ class _ extends a {
     );
   }
 }
-class g extends a {
+class c extends a {
   constructor() {
     super({
       targetWindow: window.parent,
@@ -88,11 +88,8 @@ class g extends a {
     );
   }
 }
-const f = {
-  Parent: _,
-  Child: g
-};
 export {
-  f as Handshake
+  c as Child,
+  g as Parent
 };
 //# sourceMappingURL=handshake.js.map

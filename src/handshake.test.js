@@ -1,4 +1,4 @@
-import { Handshake } from "./handshake";
+import * as Handshake from "./handshake";
 import { describe, it, beforeEach, expect } from "vitest";
 
 beforeEach(() => {

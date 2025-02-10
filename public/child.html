@@ -5,8 +5,8 @@
    </head>
    <body>
       <script type="module">
-         import { Handshake } from "../src/handshake.ts";
-         new Handshake.Child().ready(({ on, emit }) =>
+         import { Parent, Child } from "../src/handshake.ts";
+         new Child().ready(({ on, emit }) =>
             on("parentToChild", () => emit("childToParent", "Hello parent"))
          );
       </script>
