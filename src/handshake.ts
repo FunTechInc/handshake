@@ -1,8 +1,6 @@
-type Emit = (key: string, value: any) => void;
-type On = (key: string, callback: (value: any) => void) => void;
 type ReadyEvent = {
-   emit: Emit;
-   on: On;
+   emit: (key: string, value: any) => void;
+   on: (key: string, callback: (value: any) => void) => void;
    revert: () => void;
 };
 type MessageData = { type: string; key?: string; value?: any };
@@ -43,6 +41,7 @@ abstract class BaseChannel {
       this._handlers = {};
       this._targetWindow = opt.targetWindow;
       this._targetOrigin = opt.targetOrigin;
+
       window.addEventListener("message", this._onMessage.bind(this));
    }
 
@@ -56,18 +55,26 @@ abstract class BaseChannel {
    }
 
    public ready(callback: (event: ReadyEvent) => void): void {
-      this._Promise.then(callback);
+      this._Promise.then((instance) => {
+         callback({
+            ...instance,
+            emit: this.emit.bind(this),
+            on: this.on.bind(this),
+            revert: this.revert.bind(this),
+         });
+      });
    }
 
-   public emit: Emit = (key, value) =>
+   public emit(key: string, value: any): void {
       this._sendMessage({ type: "event", key, value });
+   }
 
-   public on: On = (key, callback) => {
+   public on(key: string, callback: (value: any) => void): void {
       if (!this._handlers[key]) this._handlers[key] = [];
       this._handlers[key].push(callback);
-   };
+   }
 
-   public revert() {
+   public revert(): void {
       window.removeEventListener("message", this._onMessage.bind(this));
    }
 
@@ -114,6 +121,11 @@ export class Parent extends BaseChannel {
       this.iframe.src = opt.url;
    }
 
+   public revert() {
+      super.revert();
+      this.iframe.parentNode?.removeChild(this.iframe);
+   }
+
    public ready(
       callback: (
          event: {
@@ -123,11 +135,6 @@ export class Parent extends BaseChannel {
       ) => void
    ): void {
       super.ready(callback as any);
-   }
-
-   public revert() {
-      super.revert();
-      this.iframe.parentNode?.removeChild(this.iframe);
    }
 
    private _startHandshake(): void {

@@ -1,7 +1,7 @@
 var h = Object.defineProperty;
-var o = (s, t, e) => t in s ? h(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
-var r = (s, t, e) => o(s, typeof t != "symbol" ? t + "" : t, e);
-const d = [
+var d = (s, t, e) => t in s ? h(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
+var r = (s, t, e) => d(s, typeof t != "symbol" ? t + "" : t, e);
+const o = [
   "handshake",
   "handshake-reply",
   "event"
@@ -9,7 +9,7 @@ const d = [
 function l(s, t) {
   if (t == null || s.origin !== t || !s.data || typeof s.data != "object") return !1;
   const e = s.data;
-  return !(!e.type || !d.includes(e.type));
+  return !(!e.type || !o.includes(e.type));
 }
 class a {
   constructor(t = {}) {
@@ -19,10 +19,6 @@ class a {
     r(this, "_handlers");
     r(this, "_targetWindow");
     r(this, "_targetOrigin");
-    r(this, "emit", (t, e) => this._sendMessage({ type: "event", key: t, value: e }));
-    r(this, "on", (t, e) => {
-      this._handlers[t] || (this._handlers[t] = []), this._handlers[t].push(e);
-    });
     this._Promise = new Promise((e, i) => {
       this._PromiseResolver = e, this._PromiseRejecter = i;
     }), this._handlers = {}, this._targetWindow = t.targetWindow, this._targetOrigin = t.targetOrigin, window.addEventListener("message", this._onMessage.bind(this));
@@ -35,7 +31,20 @@ class a {
     this._handlers[t] && this._handlers[t].forEach((i) => i(e));
   }
   ready(t) {
-    this._Promise.then(t);
+    this._Promise.then((e) => {
+      t({
+        ...e,
+        emit: this.emit.bind(this),
+        on: this.on.bind(this),
+        revert: this.revert.bind(this)
+      });
+    });
+  }
+  emit(t, e) {
+    this._sendMessage({ type: "event", key: t, value: e });
+  }
+  on(t, e) {
+    this._handlers[t] || (this._handlers[t] = []), this._handlers[t].push(e);
   }
   revert() {
     window.removeEventListener("message", this._onMessage.bind(this));
@@ -58,12 +67,12 @@ class g extends a {
       this._targetWindow = this.iframe.contentWindow, this._startHandshake();
     }), this.iframe.src = e.url;
   }
-  ready(e) {
-    super.ready(e);
-  }
   revert() {
     var e;
     super.revert(), (e = this.iframe.parentNode) == null || e.removeChild(this.iframe);
+  }
+  ready(e) {
+    super.ready(e);
   }
   _startHandshake() {
     let e = 0;

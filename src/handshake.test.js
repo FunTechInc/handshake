@@ -12,8 +12,7 @@ describe("Handshake", () => {
             container: "container",
             url: "http://localhost:63315/child.html",
          }).ready(({ revert }) => {
-            // console.log("revert", revert);
-            // revert();
+            revert();
             resolve();
          });
       });
@@ -30,10 +29,10 @@ describe("Handshake", () => {
                expect(iframe).not.toBeNull();
                expect(container).toBeInstanceOf(HTMLElement);
                expect(iframe).toBeInstanceOf(HTMLIFrameElement);
-               // revert();
+               revert();
                resolve();
             } catch (error) {
-               // revert();
+               revert();
                reject(error);
             }
          });
@@ -50,10 +49,10 @@ describe("Handshake", () => {
             on("childToParent", (value) => {
                try {
                   expect(value).toBe("Hello parent");
-                  // revert();
+                  revert();
                   resolve();
                } catch (error) {
-                  // revert();
+                  revert();
                   reject(error);
                }
             });
