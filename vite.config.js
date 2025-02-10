@@ -11,6 +11,7 @@ export default defineConfig({
       rollupOptions: {
          output: {
             dir: "./build",
+            format: "umd",
             name: "Handshake",
          },
       },
