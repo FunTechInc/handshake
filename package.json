@@ -1,6 +1,6 @@
 {
    "name": "@funtech-inc/handshake",
-   "version": "0.0.6",
+   "version": "0.0.7",
    "description": "🤝 Shake hands with iframe",
    "main": "./build/handshake.umd.cjs",
    "module": "./build/handshake.js",
