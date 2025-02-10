@@ -7,7 +7,7 @@ $ npm i @funtech-inc/handshake --D
 
 ```html
 // CDN
-<script src="https://unpkg.com/@funtech-inc/handshake">
+<script src="https://unpkg.com/@funtech-inc/handshake@latest">
 ```
 
 ## Example
@@ -32,7 +32,7 @@ new Handshake.Parent({
 
 ```javascript
 new Handshake.Child().ready(({ on, emit }) => {
-   emit("chikdToParent", "hello parent");
+   emit("childToParent", "hello parent");
    on("parentToChild", (data) => {
       console.log(data);
    }); // Log... "hello child"

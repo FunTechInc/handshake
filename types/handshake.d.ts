@@ -3,6 +3,7 @@ type On = (key: string, callback: (value: any) => void) => void;
 type ReadyEvent = {
     emit: Emit;
     on: On;
+    revert: () => void;
 };
 type MESSAGE_TYPES = "handshake" | "handshake-reply" | "event";
 declare abstract class BaseChannel {
@@ -23,6 +24,7 @@ declare abstract class BaseChannel {
     ready(callback: (event: ReadyEvent) => void): void;
     emit: Emit;
     on: On;
+    revert(): void;
     protected abstract _onMessage(event: MessageEvent): void;
     protected _handleOnMessage(e: MessageEvent, type: MESSAGE_TYPES, callback: () => void): void;
 }
@@ -38,6 +40,7 @@ export declare class Parent extends BaseChannel {
         iframe: HTMLIFrameElement;
         container: HTMLElement;
     } & ReadyEvent) => void): void;
+    revert(): void;
     private _startHandshake;
     protected _onMessage(e: MessageEvent): void;
 }

@@ -3,6 +3,7 @@ type On = (key: string, callback: (value: any) => void) => void;
 type ReadyEvent = {
    emit: Emit;
    on: On;
+   revert: () => void;
 };
 type MessageData = { type: string; key?: string; value?: any };
 type MESSAGE_TYPES = "handshake" | "handshake-reply" | "event";
@@ -66,6 +67,10 @@ abstract class BaseChannel {
       this._handlers[key].push(callback);
    };
 
+   public revert() {
+      window.removeEventListener("message", this._onMessage.bind(this));
+   }
+
    protected abstract _onMessage(event: MessageEvent): void;
    protected _handleOnMessage(
       e: MessageEvent,
@@ -118,6 +123,11 @@ export class Parent extends BaseChannel {
       ) => void
    ): void {
       super.ready(callback as any);
+   }
+
+   public revert() {
+      super.revert();
+      this.iframe.parentNode?.removeChild(this.iframe);
    }
 
    private _startHandshake(): void {
