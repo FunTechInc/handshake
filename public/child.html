@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Tests child</title>
+   </head>
+   <body>
+      <script type="module">
+         import { Handshake } from "../src/handshake.ts";
+         new Handshake.Child().ready(({ on, emit }) =>
+            on("parentToChild", () => emit("childToParent", "Hello parent"))
+         );
+      </script>
+   </body>
+</html>

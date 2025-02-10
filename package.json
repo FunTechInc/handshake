@@ -1,0 +1,45 @@
+{
+   "name": "@funtech-inc/handshake",
+   "version": "0.0.0",
+   "description": "🤝 Shake hands with iframe",
+   "main": "./build/handshake.umd.cjs",
+   "module": "./build/handshake.js",
+   "types": "./types/handshake.d.ts",
+   "sideEffects": false,
+   "exports": {
+      ".": {
+         "types": "./types/handshake.d.ts",
+         "require": "./build/handshake.umd.cjs",
+         "import": "./build/handshake.js"
+      }
+   },
+   "type": "module",
+   "scripts": {
+      "dev": "vite",
+      "build": "tsc && vite build",
+      "vitest": "vitest run --browser",
+      "test": "start-server-and-test dev http://localhost:5173 'vitest --browser'"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/FunTechInc/handshake"
+   },
+   "keywords": [
+      "iframe",
+      "postmessage",
+      "handshake"
+   ],
+   "author": "HASHIMOTO Takuma (https://github.com/takuma-hmng8) from FunTech (https://github.com/FunTechInc)",
+   "license": "MIT",
+   "files": [
+      "build",
+      "types"
+   ],
+   "devDependencies": {
+      "@vitest/browser": "^3.0.5",
+      "start-server-and-test": "^2.0.10",
+      "typescript": "~5.6.2",
+      "vite": "^6.0.5",
+      "vitest": "^3.0.5"
+   }
+}
