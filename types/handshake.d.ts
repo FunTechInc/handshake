@@ -13,6 +13,7 @@ declare abstract class BaseChannel {
     };
     protected _targetWindow?: Window | null;
     protected _targetOrigin?: string;
+    protected _bindedOnMessage: (e: MessageEvent) => void;
     constructor(opt?: {
         targetWindow?: Window;
         targetOrigin?: string;

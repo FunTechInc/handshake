@@ -33,6 +33,8 @@ abstract class BaseChannel {
    protected _targetWindow?: Window | null;
    protected _targetOrigin?: string;
 
+   protected _bindedOnMessage: (e: MessageEvent) => void;
+
    constructor(opt: { targetWindow?: Window; targetOrigin?: string } = {}) {
       this._Promise = new Promise<this>((resolve, reject) => {
          this._PromiseResolver = resolve;
@@ -42,7 +44,8 @@ abstract class BaseChannel {
       this._targetWindow = opt.targetWindow;
       this._targetOrigin = opt.targetOrigin;
 
-      window.addEventListener("message", this._onMessage.bind(this));
+      this._bindedOnMessage = this._onMessage.bind(this);
+      window.addEventListener("message", this._bindedOnMessage);
    }
 
    protected _sendMessage(msg: any): void {
@@ -75,7 +78,7 @@ abstract class BaseChannel {
    }
 
    public revert(): void {
-      window.removeEventListener("message", this._onMessage.bind(this));
+      window.removeEventListener("message", this._bindedOnMessage);
    }
 
    protected abstract _onMessage(event: MessageEvent): void;

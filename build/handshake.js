@@ -1,27 +1,28 @@
 var h = Object.defineProperty;
 var d = (s, t, e) => t in s ? h(s, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[t] = e;
-var r = (s, t, e) => d(s, typeof t != "symbol" ? t + "" : t, e);
+var n = (s, t, e) => d(s, typeof t != "symbol" ? t + "" : t, e);
 const o = [
   "handshake",
   "handshake-reply",
   "event"
 ];
-function l(s, t) {
+function _(s, t) {
   if (t == null || s.origin !== t || !s.data || typeof s.data != "object") return !1;
   const e = s.data;
   return !(!e.type || !o.includes(e.type));
 }
 class a {
   constructor(t = {}) {
-    r(this, "_Promise");
-    r(this, "_PromiseResolver");
-    r(this, "_PromiseRejecter");
-    r(this, "_handlers");
-    r(this, "_targetWindow");
-    r(this, "_targetOrigin");
+    n(this, "_Promise");
+    n(this, "_PromiseResolver");
+    n(this, "_PromiseRejecter");
+    n(this, "_handlers");
+    n(this, "_targetWindow");
+    n(this, "_targetOrigin");
+    n(this, "_bindedOnMessage");
     this._Promise = new Promise((e, i) => {
       this._PromiseResolver = e, this._PromiseRejecter = i;
-    }), this._handlers = {}, this._targetWindow = t.targetWindow, this._targetOrigin = t.targetOrigin, window.addEventListener("message", this._onMessage.bind(this));
+    }), this._handlers = {}, this._targetWindow = t.targetWindow, this._targetOrigin = t.targetOrigin, this._bindedOnMessage = this._onMessage.bind(this), window.addEventListener("message", this._bindedOnMessage);
   }
   _sendMessage(t) {
     var e;
@@ -47,20 +48,20 @@ class a {
     this._handlers[t] || (this._handlers[t] = []), this._handlers[t].push(e);
   }
   revert() {
-    window.removeEventListener("message", this._onMessage.bind(this));
+    window.removeEventListener("message", this._bindedOnMessage);
   }
   _handleOnMessage(t, e, i) {
-    if (!l(t, this._targetOrigin)) return;
-    const n = t.data;
-    n.type === e ? (i(), this._PromiseResolver(this)) : n.type === "event" && n.key != null && this._trigger(n.key, n.value);
+    if (!_(t, this._targetOrigin)) return;
+    const r = t.data;
+    r.type === e ? (i(), this._PromiseResolver(this)) : r.type === "event" && r.key != null && this._trigger(r.key, r.value);
   }
 }
 class g extends a {
   constructor(e) {
     super();
-    r(this, "container");
-    r(this, "iframe");
-    r(this, "_handshakeInterval");
+    n(this, "container");
+    n(this, "iframe");
+    n(this, "_handshakeInterval");
     const i = document.getElementById(e.container);
     if (!i) throw new Error("Container element not found");
     this.container = i, this.iframe = document.createElement("iframe"), this.iframe.style.width = "100%", this.iframe.style.height = "100%", this.container.appendChild(this.iframe), this._targetOrigin = new URL(e.url, window.location.href).origin, this.iframe.addEventListener("load", () => {
