@@ -1,17 +1,17 @@
-var d = Object.defineProperty;
-var o = (s, e, t) => e in s ? d(s, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : s[e] = t;
-var n = (s, e, t) => o(s, typeof e != "symbol" ? e + "" : e, t);
-const l = [
+var h = Object.defineProperty;
+var d = (s, e, t) => e in s ? h(s, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : s[e] = t;
+var n = (s, e, t) => d(s, typeof e != "symbol" ? e + "" : e, t);
+const o = [
   "handshake",
   "handshake-reply",
   "event"
 ];
-function _(s, e) {
+function l(s, e) {
   if (e == null || s.origin !== e || !s.data || typeof s.data != "object") return !1;
   const t = s.data;
-  return !(!t.type || !l.includes(t.type));
+  return !(!t.type || !o.includes(t.type));
 }
-class r {
+class a {
   constructor(e = {}) {
     n(this, "_Promise");
     n(this, "_PromiseResolver");
@@ -38,12 +38,12 @@ class r {
     this._Promise.then(e);
   }
   _handleOnMessage(e, t, i) {
-    if (!_(e, this._targetOrigin)) return;
-    const a = e.data;
-    a.type === t ? (i(), this._PromiseResolver(this)) : a.type === "event" && a.key != null && this._trigger(a.key, a.value);
+    if (!l(e, this._targetOrigin)) return;
+    const r = e.data;
+    r.type === t ? (i(), this._PromiseResolver(this)) : r.type === "event" && r.key != null && this._trigger(r.key, r.value);
   }
 }
-class g extends r {
+class _ extends a {
   constructor(t) {
     super();
     n(this, "container");
@@ -73,7 +73,7 @@ class g extends r {
     );
   }
 }
-class f extends r {
+class g extends a {
   constructor() {
     super({
       targetWindow: window.parent,
@@ -88,13 +88,11 @@ class f extends r {
     );
   }
 }
-const h = {
-  Parent: g,
-  Child: f
+const f = {
+  Parent: _,
+  Child: g
 };
-typeof exports < "u" && (exports.Handshake = h);
-typeof globalThis < "u" && (globalThis.Handshake = h);
 export {
-  h as Handshake
+  f as Handshake
 };
 //# sourceMappingURL=handshake.js.map

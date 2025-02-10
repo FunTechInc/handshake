@@ -9,10 +9,25 @@ export default defineConfig({
          fileName: "handshake",
       },
       rollupOptions: {
-         output: {
-            dir: "./build",
-            name: "Handshake",
-         },
+         output: [
+            {
+               format: "umd",
+               name: "Handshake",
+               dir: "./build",
+               entryFileNames: "handshake.umd.cjs",
+            },
+            {
+               format: "es",
+               dir: "./build",
+               entryFileNames: "handshake.js",
+            },
+            {
+               format: "umd",
+               name: "Handshake",
+               dir: "./build",
+               entryFileNames: "handshake.min.js",
+            },
+         ],
       },
       sourcemap: true,
    },

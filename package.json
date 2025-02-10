@@ -5,6 +5,7 @@
    "main": "./build/handshake.umd.cjs",
    "module": "./build/handshake.js",
    "types": "./types/handshake.d.ts",
+   "unpkg": "./build/handshake.min.js",
    "sideEffects": false,
    "exports": {
       ".": {
