@@ -115,7 +115,7 @@ export class Parent extends BaseChannel {
 
       this.container.appendChild(this.iframe);
 
-      this._targetOrigin = new URL(opt.url, window.location.href).origin;
+      this._targetOrigin = new URL(opt.url).origin;
 
       this.iframe.addEventListener("load", () => {
          this._targetWindow = this.iframe.contentWindow;
@@ -162,16 +162,17 @@ export class Parent extends BaseChannel {
 }
 
 export class Child extends BaseChannel {
-   constructor() {
+   constructor(opt: { url: string }) {
       super({
          targetWindow: window.parent,
-         targetOrigin: window.parent.location.origin,
+         targetOrigin: new URL(opt.url).origin,
       });
    }
 
    protected _onMessage(e: MessageEvent): void {
-      this._handleOnMessage(e, "handshake", () =>
-         this._sendMessage({ type: "handshake-reply" })
-      );
+      this._handleOnMessage(e, "handshake", () => {
+         this._targetOrigin = e.origin;
+         this._sendMessage({ type: "handshake-reply" });
+      });
    }
 }

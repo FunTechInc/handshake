@@ -6,23 +6,24 @@
    <body>
       <script type="module">
          import { Parent, Child } from "../src/handshake.ts";
-         new Child().ready(({ on, emit, revert }) => {
-            on("parentToChild", () => emit("childToParent", "Hello parent"));
-
-            /*===============================================
-				revert test
-				===============================================*/
-            let revertTestCount = 0;
-            on("revertTestCount", () => {
-               revertTestCount += 1;
-            });
-            on("revertTest", () => {
-               revert();
-               setTimeout(() => {
-                  emit("revertTestReturn", revertTestCount);
-               }, 500);
-            });
-         });
+         new Child({ url: "http://localhost:63315/" }).ready(
+            ({ on, emit, revert }) => {
+               on("parentToChild", () => emit("childToParent", "Hello parent"));
+               /*===============================================
+					revert test
+					===============================================*/
+               let revertTestCount = 0;
+               on("revertTestCount", () => {
+                  revertTestCount += 1;
+               });
+               on("revertTest", () => {
+                  revert();
+                  setTimeout(() => {
+                     emit("revertTestReturn", revertTestCount);
+                  }, 500);
+               });
+            }
+         );
       </script>
    </body>
 </html>

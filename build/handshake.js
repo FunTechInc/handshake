@@ -64,7 +64,7 @@ class g extends a {
     n(this, "_handshakeInterval");
     const i = document.getElementById(e.container);
     if (!i) throw new Error("Container element not found");
-    this.container = i, this.iframe = document.createElement("iframe"), this.iframe.style.width = "100%", this.iframe.style.height = "100%", this.container.appendChild(this.iframe), this._targetOrigin = new URL(e.url, window.location.href).origin, this.iframe.addEventListener("load", () => {
+    this.container = i, this.iframe = document.createElement("iframe"), this.iframe.style.width = "100%", this.iframe.style.height = "100%", this.container.appendChild(this.iframe), this._targetOrigin = new URL(e.url).origin, this.iframe.addEventListener("load", () => {
       this._targetWindow = this.iframe.contentWindow, this._startHandshake();
     }), this.iframe.src = e.url;
   }
@@ -91,18 +91,16 @@ class g extends a {
   }
 }
 class c extends a {
-  constructor() {
+  constructor(t) {
     super({
       targetWindow: window.parent,
-      targetOrigin: window.parent.location.origin
+      targetOrigin: new URL(t.url).origin
     });
   }
   _onMessage(t) {
-    this._handleOnMessage(
-      t,
-      "handshake",
-      () => this._sendMessage({ type: "handshake-reply" })
-    );
+    this._handleOnMessage(t, "handshake", () => {
+      this._targetOrigin = t.origin, this._sendMessage({ type: "handshake-reply" });
+    });
   }
 }
 export {
