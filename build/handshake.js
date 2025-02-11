@@ -78,8 +78,8 @@ class g extends a {
   _startHandshake() {
     let e = 0;
     const i = window.setInterval(() => {
-      e++, e > 10 ? (clearInterval(i), this._PromiseRejecter(new Error("Handshake failed"))) : this._sendMessage({ type: "handshake" });
-    }, 500);
+      e++, e > 50 ? (clearInterval(i), this._PromiseRejecter(new Error("Handshake failed"))) : this._sendMessage({ type: "handshake" });
+    }, 100);
     this._handshakeInterval = i;
   }
   _onMessage(e) {
