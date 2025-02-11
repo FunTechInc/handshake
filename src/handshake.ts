@@ -6,7 +6,7 @@ type ReadyEvent = {
 type MessageData = { type: string; key?: string; value?: any };
 type MESSAGE_TYPES = "handshake" | "handshake-reply" | "event";
 
-const MAX_HANDSHAKE_REQUESTS: number = 5;
+const MAX_HANDSHAKE_REQUESTS: number = 10;
 const HANDSHAKE_REQUESTS_INTERVAL: number = 500;
 const ALLOWED_MESSAGE_TYPES: MESSAGE_TYPES[] = [
    "handshake",
