@@ -112,6 +112,7 @@ export class Parent extends BaseChannel {
       this.iframe = document.createElement("iframe");
       this.iframe.style.width = "100%";
       this.iframe.style.height = "100%";
+      this.iframe.style.position = "absolute";
 
       this.container.appendChild(this.iframe);
 
