@@ -44,7 +44,9 @@ export declare class Parent extends BaseChannel {
     protected _onMessage(e: MessageEvent): void;
 }
 export declare class Child extends BaseChannel {
-    constructor();
+    constructor(opt: {
+        url: string;
+    });
     protected _onMessage(e: MessageEvent): void;
 }
 export {};
