@@ -31,7 +31,7 @@ new Handshake.Parent({
 **child**
 
 ```javascript
-new Handshake.Child().ready(({ on, emit }) => {
+new Handshake.Child({ url: "http://example.com/" }).ready(({ on, emit }) => {
    emit("childToParent", "hello parent");
    on("parentToChild", (data) => {
       console.log(data);
